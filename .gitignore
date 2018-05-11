@@ -24,6 +24,11 @@ common.pyc
 /blocks_compressed_horizontal.js
 /blocks_compressed_vertical.js
 /blocks_compressed.js
+/dart_compressed.js
+/javascript_compressed.js
+/lua_compressed.js
+/php_compressed.js
+/python_compressed.js
 /gh-pages/main.js
 /gh-pages/playgrounds
 /gh-pages/Gemfile.lock
@@ -31,8 +36,3 @@ common.pyc
 /gh-pages/_site
 /*compiler*.jar
 /local_blockly_compressed_vertical.js
-/dart_compressed.js
-/javascript_compressed.js
-/lua_compressed.js
-/php_compressed.js
-/python_compressed.js
