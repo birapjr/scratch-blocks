@@ -6,14 +6,15 @@
 
     <title>TrendsMix Scratch Blocks for Arduino</title>
 
-    <script src="../blockly_uncompressed_horizontal.js"></script>
-    <script src="../msg/messages.js"></script>
-    <script src="../blocks_common/math.js"></script>
-    <script src="../blocks_common/text.js"></script>
-    <script src="../blocks_horizontal/control.js"></script>
-    <script src="../blocks_horizontal/event.js"></script>
-    <script src="../blocks_horizontal/arduino.js"></script>
-    <script src="../blocks_horizontal/arduino_toolbox.js"></script>
+    <!-- Default scripts -->
+    <script src="blockly_uncompressed_horizontal.js"></script>
+    <script src="msg/messages.js"></script>
+    <script src="blocks_common/math.js"></script>
+    <script src="blocks_common/text.js"></script>
+    <script src="blocks_horizontal/control.js"></script>
+    <script src="blocks_horizontal/event.js"></script>
+    <script src="blocks_horizontal/arduino.js"></script>
+    <script src="blocks_horizontal/arduino_toolbox.js"></script>
     <script>
       'use strict';
 
@@ -304,6 +305,23 @@
       }
     </script>
 
+    <!-- TrendsMix Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      'use strict';
+      function saveData(data) {
+        $.ajax({
+          type: 'POST',    
+          url: 'webservice/saveProject',
+          data: data,
+          success: function(msg){
+            alert('wow' + msg);
+          }
+        });
+      }
+    </script>
+
+    <!-- Default style-->
     <style>
       html, body {
         height: 100%;
@@ -344,6 +362,9 @@
         font-family: monospace;
       }
     </style>
+
+    <!-- TrendsMix style-->
+    <link rel="stylesheet" type="text/css" href="public/css/style.css">
   </head>
 
   <body onload="start()">
@@ -387,6 +408,13 @@
       </form>
     </div>
 
+    <br/ >
+    <br/ >
 
+    <div style="text-align: center;">
+      <input type="image" src="media/icons/tmx/save.svg" class="button-1" onclick="saveData('abc')" />
+      &emsp;
+      <input type="image" src="media/icons/tmx/cpu.svg" class="button-1" />
+    </div>
   </body>
 </html>
