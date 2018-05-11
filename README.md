@@ -3,4 +3,4 @@
 
 This project is based on the [scratch-blocks](https://github.com/LLK/scratch-blocks)
 
-Its still on very early stage, not functional now.
+Its still on very early stage, not functional by now.
