@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Icon"
+   viewBox="0 0 40 40"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="set-led_off.svg">
+  <metadata
+     id="metadata7537">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>set-led_green</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7535" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1855"
+     inkscape:window-height="1056"
+     id="namedview7533"
+     showgrid="false"
+     inkscape:zoom="25.989318"
+     inkscape:cx="20.18391"
+     inkscape:cy="23.138529"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Icon" />
+  <title
+     id="title7507">set-led_green</title>
+  <path
+     d="M28.75,17.79A8.75,8.75,0,0,1,27,24c-1.26,1.63-2.05,2.6-2.05,4.66V28.57a2.36,2.36,0,0,1-1.31,2.2l0,0a8.11,8.11,0,0,1-7.06,0h0a2.31,2.31,0,0,1-1.3-2.08h0c0-2.06-.8-3-2.07-4.65A8.76,8.76,0,1,1,28.75,17.79Z"
+     fill="#4cbf56"
+     stroke="#774dcb"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="path7509"
+     style="fill:#021b1b;fill-opacity:1" />
+  <circle
+     cx="20.03"
+     cy="34.16"
+     r="2.96"
+     fill="#e6e7e8"
+     stroke="#774dcb"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="circle7511" />
+  <path
+     d="M25.21,31.91a2.17,2.17,0,0,1-1.34,2l-0.09,0a9.77,9.77,0,0,1-7.54,0h0A2.13,2.13,0,0,1,14.85,32V30.14a0.85,0.85,0,0,1,1-.85L17,29.47a21.15,21.15,0,0,0,6.06,0l1.18-.17a0.85,0.85,0,0,1,1,.85v1.77Z"
+     fill="#e6e7e8"
+     stroke="#774dcb"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="path7513" />
+  <path
+     d="M14.85,31.21a6.89,6.89,0,0,0,1.62.61"
+     fill="#e6e7e8"
+     stroke="#774dcb"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="path7519" />
+  <path
+     d="M25.21,31.21a6.89,6.89,0,0,1-1.62.61"
+     fill="#e6e7e8"
+     stroke="#774dcb"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="path7521" />
+</svg>
