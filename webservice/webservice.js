@@ -19,18 +19,20 @@
  */
 
 /**
- * @fileoverview TrendsMix Building Blocks for Arduino - Main app site
+ * @fileoverview TrendsMix Building Blocks for Arduino - Web Service backend
  * @author ubirajara.cortes@trendsmix.com <Ubirajara Cortes>
  */
 'use strict';
 const express = require('express');
-const app = express();
-const loqreq = require('locreq');
-const webservice = loqreq('webservice/webservice');
+const router = express.Router();
+const bodyParser = require('body-parser');
 
-app.use(express.static('.'));
-app.use(webservice);
+router.use(bodyParser.text());
 
-app.listen(3000, () => {
-  console.log('Server listening at http://localhost:3000');
+router.post('/saveProject', (req, res) => {
+  console.log('Saving project data...');
+  let body = req.body;
+
 });
+
+module.exports = router;

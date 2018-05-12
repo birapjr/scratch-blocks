@@ -309,11 +309,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
       'use strict';
-      function saveData(data) {
+      function saveData() {
+        //Get xml data of the project
+        let xml = Blockly.Xml.workspaceToDom(workspace);
+        let prettyXmlText = Blockly.Xml.domToPrettyText(xml);
+
         $.ajax({
           type: 'POST',    
           url: 'webservice/saveProject',
-          data: data,
+          data: prettyXmlText,
           success: function(msg){
             alert('wow' + msg);
           }
@@ -412,7 +416,7 @@
     <br/ >
 
     <div style="text-align: center;">
-      <input type="image" src="media/icons/tmx/save.svg" class="button-1" onclick="saveData('abc')" />
+      <input type="image" src="media/icons/tmx/save.svg" class="button-1" onclick="saveData()" />
       &emsp;
       <input type="image" src="media/icons/tmx/cpu.svg" class="button-1" />
     </div>
