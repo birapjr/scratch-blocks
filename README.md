@@ -5,6 +5,6 @@ This project is a fork of [scratch-blocks](https://github.com/LLK/scratch-blocks
 
 Blink example:
 
-![BlinkExample](/media/images/blink_example.png){:height="700px" width="700px"}
+![BlinkExample](/media/images/blink_example.png)
 
 Its still on very early stage, not functional by now.
