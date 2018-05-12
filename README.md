@@ -4,6 +4,6 @@
 This project is a fork of [scratch-blocks](https://github.com/LLK/scratch-blocks)
 
 Blink example
-![](http://test.com/blink_example.png)
+![](https://raw.githubusercontent.com/birapjr/trendsmix-building-blocks-for-arduino/develop/media/images/blink_example.png)
 
 Its still on very early stage, not functional by now.
