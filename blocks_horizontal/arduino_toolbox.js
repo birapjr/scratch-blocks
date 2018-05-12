@@ -50,7 +50,7 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
         '</value>' +
         '</block>' +
     '</category>' +
-    '<category name="Arduino">' +
+    '<category name="Hardware">' +
         '<block type="arduino_setcolor">' +
         '<value name="CHOICE">' +
         '<shadow type="dropdown_arduino_setcolor">' +
