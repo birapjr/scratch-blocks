@@ -27,12 +27,11 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 
-router.use(bodyParser.text());
+router.use(bodyParser.text({ type: 'text/xml' }));
 
 router.post('/saveProject', (req, res) => {
   console.log('Saving project data...');
-  let body = req.body;
-
+  console.log(req.body);
 });
 
 module.exports = router;

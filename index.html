@@ -317,6 +317,8 @@
         $.ajax({
           type: 'POST',    
           url: 'webservice/saveProject',
+          contentType: 'text/xml',
+          headers: {'Content-Type': 'text/xml'},
           data: prettyXmlText,
           success: function(msg){
             alert('wow' + msg);

@@ -25,11 +25,10 @@
 'use strict';
 const express = require('express');
 const app = express();
-const loqreq = require('locreq');
-const webservice = loqreq('webservice/webservice');
+const webservice = require('./webservice/webservice');
 
 app.use(express.static('.'));
-app.use(webservice);
+app.use('/webservice', webservice);
 
 app.listen(3000, () => {
   console.log('Server listening at http://localhost:3000');
