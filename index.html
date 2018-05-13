@@ -21,6 +21,17 @@
       var fakeDragStack = [];
       var workspace = null;
 
+      function showHideSoundControl(state) {
+        if (state) {
+          $('#sound-on').show();
+          $('#sound-off').hide();
+        }
+        else {
+          $('#sound-on').hide();
+          $('#sound-off').show();
+        }
+      }
+
       function start() {
         var soundsEnabled = null;
         if (sessionStorage) {
@@ -33,7 +44,8 @@
           }
         } else {
           soundsEnabled = true;
-        }
+        }        
+
         setSoundsEnabled(soundsEnabled);
 
         // Setup blocks
@@ -239,8 +251,9 @@
       ].join('\n');
 
       function setSoundsEnabled(state) {
-        var checkbox = document.getElementById('soundsEnabled');
-        checkbox.checked = (state) ? 'checked' : '';
+        //show/hide sound control image
+        showHideSoundControl(state);
+
         if (sessionStorage) {
           sessionStorage.setItem('soundsEnabled', state);
         }
@@ -310,6 +323,7 @@
     <script>
       'use strict';
       function saveData() {
+        $('#loader').show();
         //Get xml data of the project
         let xml = Blockly.Xml.workspaceToDom(workspace);
         let prettyXmlText = Blockly.Xml.domToPrettyText(xml);
@@ -321,7 +335,7 @@
           headers: {'Content-Type': 'text/xml'},
           data: prettyXmlText,
           success: function(msg){
-            alert('wow' + msg);
+            $('#loader').hide();
           }
         });
       }
@@ -380,19 +394,33 @@
     <h1>TrendsMix Scratch Blocks for Arduino</h1>
 
 
-    <p>
-      <input type="button" value="Export to XML" onclick="toXml()">
-      &nbsp;
-      <input type="button" value="Import from XML" onclick="fromXml()" id="import">
-      <br>
-      <textarea id="importExport" style="width: 26%; height: 12em"
-        onchange="taChange();" onkeyup="taChange()"></textarea>
-    </p>
+    <div style="display: none;">
+      <p>
+        <input type="button" value="Export to XML" onclick="toXml()">
+        &nbsp;
+        <input type="button" value="Import from XML" onclick="fromXml()" id="import">
+        <br>
+        <textarea id="importExport" style="width: 26%; height: 12em"
+          onchange="taChange();" onkeyup="taChange()"></textarea>
+      </p>
+    </div>
 
-    <p>
-      Enable sounds (after refresh): &nbsp;
-      <input type="checkbox" onclick="setSoundsEnabled(this.checked)" id="soundsEnabled">
-    </p>
+    <div style="text-align: center;">
+      <br/><br/><br/>
+      Enable/disable sounds (after refresh):
+      <br/><br/>
+      <input type="image" src="media/icons/tmx/sound-on.png" id="sound-on" class="button-1" onclick="setSoundsEnabled(false)">
+      <input type="image" src="media/icons/tmx/sound-off.png" id="sound-off" class="button-1" onclick="setSoundsEnabled(true)">
+      <br/><br/><br/><br/>
+      Save:
+      <br/><br/>
+      <input type="image" src="media/icons/tmx/save.svg" class="button-1" onclick="saveData()" />
+      <img id="loader" src="media/icons/tmx/loader.gif" class="loader">
+      <br/><br/><br/><br/>
+      Upload to the Arduino hardware:
+      <br/><br/>
+      <input type="image" src="media/icons/tmx/cpu.svg" class="button-1" />
+    </div>
 
 
     <div style="display: none">
@@ -412,15 +440,6 @@
           <option value="bottom">Bottom</option>
         </select>
       </form>
-    </div>
-
-    <br/ >
-    <br/ >
-
-    <div style="text-align: center;">
-      <input type="image" src="media/icons/tmx/save.svg" class="button-1" onclick="saveData()" />
-      &emsp;
-      <input type="image" src="media/icons/tmx/cpu.svg" class="button-1" />
     </div>
   </body>
 </html>

@@ -3,4 +3,11 @@
   height: 48px;
   border: none;
   border-color: #fff;
+  outline: none;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  display: none;
 }

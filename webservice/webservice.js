@@ -32,6 +32,9 @@ router.use(bodyParser.text({ type: 'text/xml' }));
 router.post('/saveProject', (req, res) => {
   console.log('Saving project data...');
   console.log(req.body);
+  setTimeout(() => {
+    res.send('data received');  
+  }, 1000);
 });
 
 module.exports = router;
