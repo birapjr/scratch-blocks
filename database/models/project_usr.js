@@ -19,18 +19,36 @@
  */
 
 /**
- * @fileoverview TrendsMix Building Blocks for Arduino - Main app site
+ * @fileoverview TrendsMix Building Blocks for Arduino - User projects module
  * @author ubirajara.cortes@trendsmix.com <Ubirajara Cortes>
  */
-'use strict';
-const express = require('express');
-const app = express();
-const locreq  = require('locreq')(__dirname);
-const webservice = locreq('webservice/webservice');
 
-app.use(express.static('.'));
-app.use('/webservice', webservice);
-
-app.listen(3000, () => {
-  console.log('Server listening at http://localhost:3000');
-});
+module.exports = function(sequelize, DataTypes) {
+  var project = sequelize.define('project', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      allowNull: false,
+      primaryKey: true
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    projectXml: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    projectJson: {
+      type: DataTypes.JSONB,
+      allowNull: false
+    },
+    arduinoCode: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  }, {
+    tableName: 'project_usr'
+  });
+  return project;
+};

@@ -41,7 +41,14 @@
     "webpack-cli": "^2.0.15"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "fs-extra": "^6.0.1",
+    "locreq": "^1.1.0",
+    "lodash": "^4.17.10",
+    "pg": "^7.4.3",
+    "sequelize": "^4.37.7",
+    "xml2js": "^0.4.19"
   }
 }

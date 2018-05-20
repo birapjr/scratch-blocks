@@ -19,18 +19,25 @@
  */
 
 /**
- * @fileoverview TrendsMix Building Blocks for Arduino - Main app site
+ * @fileoverview TrendsMix Building Blocks for Arduino - Database module
  * @author ubirajara.cortes@trendsmix.com <Ubirajara Cortes>
  */
 'use strict';
-const express = require('express');
-const app = express();
+
 const locreq  = require('locreq')(__dirname);
-const webservice = locreq('webservice/webservice');
+const db = locreq('database/database');
 
-app.use(express.static('.'));
-app.use('/webservice', webservice);
+async function initDb() {
+  try {
+    //Create db
+    await db.sequelize.sync({force: true});
+    console.log('TBBA database initialized');
+    process.exit(0);
+  }
+  catch (error) {
+    console.error('Error on init TBBA database: ', error);
+    process.exit(1);
+  }
+};
 
-app.listen(3000, () => {
-  console.log('Server listening at http://localhost:3000');
-});
+initDb();

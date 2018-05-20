@@ -19,18 +19,26 @@
  */
 
 /**
- * @fileoverview TrendsMix Building Blocks for Arduino - Main app site
+ * @fileoverview TrendsMix Building Blocks for Arduino - Util module
  * @author ubirajara.cortes@trendsmix.com <Ubirajara Cortes>
  */
 'use strict';
-const express = require('express');
-const app = express();
-const locreq  = require('locreq')(__dirname);
-const webservice = locreq('webservice/webservice');
+const xmlParser = require('xml2js').parseString;
 
-app.use(express.static('.'));
-app.use('/webservice', webservice);
+/**
+ * Parse XML String into Json
+ * @param {String} xmlString The XML string
+ */
+async function parseXmlToJson(xmlString) {
+  return new Promise((resolve, reject) => {
+    xmlParser(xmlString, function (err, result) {
+      if (err)
+        reject(err);
+      resolve(result);
+    });
+  });
+}
 
-app.listen(3000, () => {
-  console.log('Server listening at http://localhost:3000');
-});
+module.exports = {
+  parseXmlToJson
+};

@@ -23,18 +23,38 @@
  * @author ubirajara.cortes@trendsmix.com <Ubirajara Cortes>
  */
 'use strict';
-const express = require('express');
-const router = express.Router();
+const express    = require('express');
+const router     = express.Router();
 const bodyParser = require('body-parser');
+const locreq     = require('locreq')(__dirname);
+const db         = locreq('database/database');
+const util       = locreq('util/util');
+const transpiler = locreq('transpiler/transpiler');
 
 router.use(bodyParser.text({ type: 'text/xml' }));
 
-router.post('/saveProject', (req, res) => {
-  console.log('Saving project data...');
-  console.log(req.body);
-  setTimeout(() => {
-    res.send('data received');  
-  }, 1000);
+router.post('/saveProject', async (req, res) => {
+  try {
+    console.log('Saving project data...');
+    let codeXml = req.body;
+    
+    //Convert XML to JSON
+    console.log(codeXml);
+    let jsonCode = await util.parseXmlToJson(codeXml);
+
+    //Compile to Arduino
+    let cCode = transpiler.transpile(jsonCode);
+    console.log(cCode);
+
+    //Create project object
+
+    //Save to DB
+    
+    //Reponde to the client
+    res.send('data saved');
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 module.exports = router;
