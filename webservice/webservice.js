@@ -31,12 +31,16 @@ const db         = locreq('database/database');
 const util       = locreq('util/util');
 const transpiler = locreq('transpiler/transpiler');
 
-router.use(bodyParser.text({ type: 'text/xml' }));
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({extended: true}));
 
 router.post('/saveProject', async (req, res) => {
   try {
     console.log('Saving project data...');
-    let codeXml = req.body;
+
+    //get post parametrs
+    let projectName = req.body.projectName;
+    let codeXml = req.body.prettyXmlText;
     
     //Convert XML to JSON
     console.log(codeXml);

@@ -327,13 +327,13 @@
         //Get xml data of the project
         let xml = Blockly.Xml.workspaceToDom(workspace);
         let prettyXmlText = Blockly.Xml.domToPrettyText(xml);
+        let projectName = $('#project-name').val();
 
         $.ajax({
           type: 'POST',    
           url: 'webservice/saveProject',
-          contentType: 'text/xml',
-          headers: {'Content-Type': 'text/xml'},
-          data: prettyXmlText,
+          dataType: 'json',
+          data: { prettyXmlText, projectName },
           success: function(msg){
             $('#loader').hide();
           }
