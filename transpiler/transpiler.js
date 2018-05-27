@@ -75,10 +75,15 @@ function getNextSourceBlock(jsonCodeObject, lastBlockId) {
         nextBlock = jsonCodeObject.statement[0].block[0];
       }
     }
-    else if ((jsonCodeObject.next)) {
-      //get next
+    else if (jsonCodeObject.next) {
+      //get next on next
       nextBlock = getNextSourceBlock(jsonCodeObject.next[0].block[0], lastBlockId);
     }
+    else if (jsonCodeObject.statement) {
+      //get next on statement
+      nextBlock = getNextSourceBlock(jsonCodeObject.statement[0].block[0], lastBlockId);
+    }
+
   }
   else {
     //Get the first block
@@ -103,30 +108,117 @@ function getNextBlock(jsonCodeObject, lastBlockId) {
   }
 
   let nextSourceBlock = getNextSourceBlock(jsonCodeObject, lastBlockId);
-  switch (nextSourceBlock.$.type) {
-    //green start flag
-    case 'event_whenflagclicked':
-      nextBlock.type = 'event_whenflagclicked';
-      nextBlock.id = nextSourceBlock.$.id;
-      break;
+  if (nextSourceBlock) {
+    switch (nextSourceBlock.$.type) {
+      //green start flag
+      case 'event_whenflagclicked':
+        nextBlock.type = 'event_whenflagclicked';
+        nextBlock.id = nextSourceBlock.$.id;
+        break;
 
-    case 'control_forever':
-      nextBlock.type = 'control_forever';
-      nextBlock.id = nextSourceBlock.$.id;
-      nextBlock.code = 'while (1) {';
-      break;
+      case 'control_forever':
+        nextBlock.type = 'control_forever';
+        nextBlock.id = nextSourceBlock.$.id;
+        nextBlock.code = 'while (1) {';
+        break;
 
-    case 'arduino_setcolor':
-      nextBlock.type = 'arduino_setcolor';
-      nextBlock.id = nextSourceBlock.$.id;
-      nextBlock.value = nextSourceBlock.value[0].shadow[0].field[0]._;
-      break;
-  
-    default:
-      break;
+      case 'arduino_setcolor':
+        nextBlock.type = 'arduino_setcolor';
+        nextBlock.id = nextSourceBlock.$.id;
+        nextBlock.value = nextSourceBlock.value[0].shadow[0].field[0]._;
+        switch (nextBlock.value) {
+          case 'red':
+            nextBlock.code = 'digitalWrite(RED_LED, HIGH);';
+            break;
+
+          case 'red-off':
+            nextBlock.code = 'digitalWrite(RED_LED, LOW);';
+            break;
+        
+          default:
+            break;
+        }
+        break;
+
+      case 'control_wait':
+        nextBlock.type = 'control_wait';
+        nextBlock.id = nextSourceBlock.$.id;
+        nextBlock.code = 'delay(${value});';
+        nextBlock.value = nextSourceBlock.value[0].shadow[0].field[0]._;
+        break;
+    
+      default:
+        break;
+    }
   }
 
   return nextBlock;
+}
+
+/**
+ * Compile the Block Array into C code
+ * @param {Array} codeBlockArr Array of blocks of code
+ */
+function compileCode(codeBlockArr) {
+  //c transpiled code parts
+  let cGlobalCode = '';
+  let cSetupCode = '';
+  let cLoopCode = '';
+
+  let openBlocks = 0;
+
+  codeBlockArr.forEach(block => {
+    switch (block.type) {
+      case 'arduino_setcolor':
+        if (block.value == 'red') {
+          //Global Code
+          cGlobalCode += 'int RED_LED = 3;';
+          //Setup code
+          cSetupCode += 'pinMode(RED_LED, OUTPUT);';
+          //Loop code
+          cLoopCode += block.code;
+        }
+        else if (block.value == 'red-off') {
+          cLoopCode += block.code;
+        }
+        break;
+
+      case 'control_wait':
+        //Loop code
+        cLoopCode += block.code.replace('${value}', `${block.value}*1000`);
+        break;
+
+      case 'control_forever':
+        //Loop code
+        cLoopCode += block.code;
+        openBlocks++;
+        break;
+    
+      default:
+        console.log(`Block ${block.type} not implemented`);
+        break;
+    }
+  });
+
+  //Close open blocks
+  for (let i = 1; i <= openBlocks; i++) {
+    //Loop code
+    cLoopCode += '}';
+  }
+
+  let cCode = `
+    ${cGlobalCode}
+
+    void setup() {
+      ${cSetupCode}
+    }
+    
+    void loop() {
+      ${cLoopCode}
+    }
+  `;
+
+  return cCode;
 }
 
 /**
@@ -136,11 +228,6 @@ function getNextBlock(jsonCodeObject, lastBlockId) {
  * @returns {String} the transpiled C code
  */
 function transpile(jsonCodeObject) {
-  //c transpiled code parts
-  let cGlobalCode;
-  let cSetupCode;
-  let cLoopCode;
-
   //current block
   let lastBlockId;
   let currentBlock;
@@ -149,38 +236,35 @@ function transpile(jsonCodeObject) {
   let endOfCode = false;
   let startOfCode = false;
 
-  let codeBlockMap = new Map();
-  let sequence = 1;
+  let codeBlockArr = [];
 
   while (!endOfCode) {
     currentBlock = getNextBlock(jsonCodeObject, lastBlockId);
 
-    codeBlockMap.set(sequence, currentBlock);
-    sequence++;
+    if (currentBlock.id) {
+      codeBlockArr.push(currentBlock);
 
-    if (currentBlock && currentBlock.id) {
-      lastBlockId = currentBlock.id;
-    }
-
-    switch (currentBlock.type) {
-      case 'control_forever':
-        cLoopCode += currentBlock.code;
-        break;
-      case 'arduino_setcolor':
-        //get the status of the block
-        break;
-      case 'event_whenflagclicked':
+      if (currentBlock.id) {
+        lastBlockId = currentBlock.id;
+      }
+  
+      if (currentBlock.type == 'event_whenflagclicked') {
         startOfCode = true;
-        break;
+      }
+  
+      if (!startOfCode) {
+        endOfCode = true;
+        console.log("Start block not found");
+      }  
     }
-
-    if (!startOfCode) {
+    else {
       endOfCode = true;
-      console.log("Start block not found");
-    }
+    }  
   }
 
-  return `${cGlobalCode}${cSetupCode}${cLoopCode}`;
+  let cCode = compileCode(codeBlockArr);
+
+  return cCode;
 }
 
 module.exports = {
