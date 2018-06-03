@@ -46,6 +46,7 @@ goog.require('Blockly.Workspace');
 goog.require('Blockly.WorkspaceAudio');
 goog.require('Blockly.WorkspaceComment');
 goog.require('Blockly.WorkspaceCommentSvg');
+goog.require('Blockly.WorkspaceCommentSvg.render');
 goog.require('Blockly.WorkspaceDragSurfaceSvg');
 goog.require('Blockly.Xml');
 goog.require('Blockly.ZoomControls');
@@ -588,7 +589,8 @@ Blockly.WorkspaceSvg.prototype.addFlyout_ = function(tagName) {
     RTL: this.RTL,
     oneBasedIndex: this.options.oneBasedIndex,
     horizontalLayout: this.horizontalLayout,
-    toolboxPosition: this.options.toolboxPosition
+    toolboxPosition: this.options.toolboxPosition,
+    stackGlowFilterId: this.options.stackGlowFilterId
   };
   if (this.horizontalLayout) {
     this.flyout_ = new Blockly.HorizontalFlyout(workspaceOptions);
@@ -1493,7 +1495,7 @@ Blockly.WorkspaceSvg.buildDeleteList_ = function(topBlocks) {
   var deleteList = [];
   function addDeletableBlocks(block) {
     if (block.isDeletable()) {
-      deleteList = deleteList.concat(block.getDescendants());
+      deleteList = deleteList.concat(block.getDescendants(false));
     } else {
       var children = block.getChildren();
       for (var i = 0; i < children.length; i++) {

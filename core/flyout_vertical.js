@@ -209,13 +209,15 @@ Blockly.VerticalFlyout.prototype.getMetrics_ = function() {
   // the last category.
   var contentHeight = optionBox.height * this.workspace_.scale;
   this.recordCategoryScrollPositions_();
-  var lastLabel = this.categoryScrollPositions[
-      this.categoryScrollPositions.length - 1];
-  var lastPos = lastLabel.position * this.workspace_.scale;
-  var lastCategoryHeight = contentHeight - lastPos;
   var bottomPadding = this.MARGIN;
-  if (lastCategoryHeight < viewHeight) {
-    bottomPadding = viewHeight - lastCategoryHeight;
+  if (this.categoryScrollPositions.length > 0) {
+    var lastLabel = this.categoryScrollPositions[
+        this.categoryScrollPositions.length - 1];
+    var lastPos = lastLabel.position * this.workspace_.scale;
+    var lastCategoryHeight = contentHeight - lastPos;
+    if (lastCategoryHeight < viewHeight) {
+      bottomPadding = viewHeight - lastCategoryHeight;
+    }
   }
 
   var metrics = {
@@ -450,7 +452,7 @@ Blockly.VerticalFlyout.prototype.layout_ = function(contents, gaps) {
   for (var i = 0, item; item = contents[i]; i++) {
     if (item.type == 'block') {
       var block = item.block;
-      var allBlocks = block.getDescendants();
+      var allBlocks = block.getDescendants(false);
       for (var j = 0, child; child = allBlocks[j]; j++) {
         // Mark blocks as being inside a flyout.  This is used to detect and
         // prevent the closure of the flyout if the user right-clicks on such a

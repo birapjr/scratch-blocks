@@ -214,12 +214,13 @@ Blockly.ContextMenu.callbackFactory = function(block, xml) {
  */
 Blockly.ContextMenu.blockDeleteOption = function(block) {
   // Option to delete this block but not blocks lower in the stack.
-  // Count the number of blocks that are nested in this block.
-  var descendantCount = block.getDescendants(true).length;
+  // Count the number of blocks that are nested in this block,
+  // ignoring shadows and without ordering.
+  var descendantCount = block.getDescendants(false, true).length;
   var nextBlock = block.getNextBlock();
   if (nextBlock) {
     // Blocks in the current stack would survive this block's deletion.
-    descendantCount -= nextBlock.getDescendants(true).length;
+    descendantCount -= nextBlock.getDescendants(false, true).length;
   }
   var deleteOption = {
     text: descendantCount == 1 ? Blockly.Msg.DELETE_BLOCK :
@@ -260,7 +261,7 @@ Blockly.ContextMenu.blockHelpOption = function(block) {
  */
 Blockly.ContextMenu.blockDuplicateOption = function(block) {
   var duplicateOption = {
-    text: Blockly.Msg.DUPLICATE_BLOCK,
+    text: Blockly.Msg.DUPLICATE,
     enabled: true,
     callback: block.duplicateAndDragCallback_()
   };
@@ -413,7 +414,7 @@ Blockly.ContextMenu.wsExpandOption = function(hasCollapsedBlocks, topBlocks) {
  */
 Blockly.ContextMenu.commentDeleteOption = function(comment) {
   var deleteOption = {
-    text: Blockly.Msg.REMOVE_COMMENT,
+    text: Blockly.Msg.DELETE,
     enabled: true,
     callback: function() {
       Blockly.Events.setGroup(true);
@@ -433,7 +434,7 @@ Blockly.ContextMenu.commentDeleteOption = function(comment) {
  */
 Blockly.ContextMenu.commentDuplicateOption = function(comment) {
   var duplicateOption = {
-    text: Blockly.Msg.DUPLICATE_COMMENT,
+    text: Blockly.Msg.DUPLICATE,
     enabled: true,
     callback: function() {
       Blockly.duplicate_(comment);
