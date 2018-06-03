@@ -320,6 +320,10 @@
 
     <!-- TrendsMix Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    
     <script>
       'use strict';
       function saveData() {
@@ -328,6 +332,7 @@
         let xml = Blockly.Xml.workspaceToDom(workspace);
         let prettyXmlText = Blockly.Xml.domToPrettyText(xml);
         let projectName = $('#project-name').val();
+        $('#serverMessages').text('');
 
         $.ajax({
           type: 'POST',    
@@ -335,9 +340,68 @@
           dataType: 'json',
           data: { prettyXmlText, projectName },
           success: function(msg){
+            $('#serverMessages').text(msg.msg);
             $('#loader').hide();
           }
         });
+      }
+
+      function loadProjectToWorkspace(projectName) {
+        //get code from sessionStorage
+        let projectXml = sessionStorage.getItem(projectName);
+
+        //try to load to workspace
+        let valid = true;
+        try {
+          Blockly.mainWorkspace.clear();
+          let xml = Blockly.Xml.textToDom(projectXml);
+          Blockly.Xml.domToWorkspace(workspace, xml);
+        } catch (e) {
+          valid = false;
+        }
+
+        //close projects window
+        $('#savedProjectDialog').dialog('destroy');
+        $('#savedProjectDialog').hide();
+
+        //write feedback to user
+        if (valid) {
+          $('#project-name').val(projectName);
+          $('#serverMessages').text('Project ' + projectName + ' loaded.');
+        }
+        else {
+          $('#serverMessages').text('Project not ' + projectName + ' loaded.');
+        }
+      }
+
+      function loadData() {
+        //load froject from db
+        $('#loader2').show();
+        $('#savedProjectDialog ul').empty();
+
+        $.ajax({
+          type: 'GET',
+          url: 'webservice/loadProjects',
+          dataType: 'json',
+          success: function(projectList){
+            if (projectList.projects.length > 0) {
+              for (let project of projectList.projects) {
+                $('#savedProjectDialog ul').append(
+                  $('<li>').append(
+                    $('<a>').attr('href', 'JavaScript:loadProjectToWorkspace("' + project.name + '");').append(
+                      project.name
+                        )));
+                
+                //save data on sessionStorage
+                sessionStorage.setItem(project.name, project.xml);
+              }
+            }
+            $('#serverMessages').text(projectList.msg);
+            $('#loader2').hide();    
+          }
+        })
+
+        $('#savedProjectDialog').dialog();
       }
     </script>
 
@@ -428,8 +492,16 @@
       <br/><br/>
       <input type="image" src="media/icons/tmx/cpu.svg" class="button-1" onclick="uploadData()" />
       <img id="loader3" src="media/icons/tmx/loader.gif" class="loader">
+      <br/><br/><br/><br/>
+      Server messages:
+      <br/><br/>
+      <did id="serverMessages"></did>
     </div>
 
+    <div id="savedProjectDialog" title="Saved Projects">
+      <ul>
+      </ul>
+    </div>
 
     <div style="display: none">
       <form id="options">

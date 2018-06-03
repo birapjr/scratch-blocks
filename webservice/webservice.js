@@ -36,28 +36,64 @@ router.use(bodyParser.urlencoded({extended: true}));
 
 router.post('/saveProject', async (req, res) => {
   try {
+    let returnMessage = { msg: '' };
+
     console.log('Saving project data...');
 
     //get post parametrs
     let projectName = req.body.projectName;
-    let codeXml = req.body.prettyXmlText;
-    
-    //Convert XML to JSON
-    console.log(codeXml);
-    let jsonCode = await util.parseXmlToJson(codeXml);
+    if (!projectName) {
+      returnMessage.msg = 'No project name provided';
+    }
+    else {
+      let codeXml = req.body.prettyXmlText;
+      
+      //Convert XML to JSON
+      //console.log(codeXml);
+      let jsonCode = await util.parseXmlToJson(codeXml);
 
-    //Compile to Arduino
-    let cCode = transpiler.transpile(jsonCode);
-    console.log(cCode);
+      //Compile to Arduino
+      let cCode = transpiler.transpile(jsonCode);
+      //console.log(cCode);
 
-    //Create project object
+      //Create project object
+      let project = {
+        name: projectName,
+        xml: codeXml,
+        json: jsonCode,
+        cCode: cCode
+      };
+      await db.project.upsert(project);
 
-    //Save to DB
-    
-    //Reponde to the client
-    res.send('data saved');
+      //Save to DB
+      
+      //Reponde to the client
+      returnMessage.msg = 'Project saved';
+    }
+    console.log(returnMessage.msg);
+    res.send(returnMessage);
   } catch (error) {
-    res.send(error);
+    let errorMessage = { msg: error.message };
+    res.send(errorMessage);
+  }
+});
+
+router.get('/loadProjects', async (req, res) => {
+  try {
+    let projectList = { msg: '', projects: [] };
+
+    console.log('Loading project data...');
+
+    projectList.projects = await db.project.findAll({
+      where: {},
+      order: ['name'],
+      raw: true
+    });
+    projectList.msg = 'Projects loaded';
+    res.send(projectList);
+  } catch (error) {
+    let errorMessage = { msg: error.message, projects: [] };
+    res.send(errorMessage);
   }
 });
 

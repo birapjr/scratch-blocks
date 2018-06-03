@@ -24,7 +24,7 @@
  */
 
 module.exports = function(sequelize, DataTypes) {
-  var project = sequelize.define('project', {
+  const project = sequelize.define('project', {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -33,18 +33,19 @@ module.exports = function(sequelize, DataTypes) {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
-    projectXml: {
-      type: DataTypes.STRING,
+    xml: {
+      type: DataTypes.TEXT,
       allowNull: false,
     },
-    projectJson: {
+    json: {
       type: DataTypes.JSONB,
       allowNull: false
     },
-    arduinoCode: {
-      type: DataTypes.STRING,
+    cCode: {
+      type: DataTypes.TEXT,
       allowNull: false
     }
   }, {

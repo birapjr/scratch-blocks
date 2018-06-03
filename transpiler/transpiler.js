@@ -193,6 +193,10 @@ function compileCode(codeBlockArr) {
         cLoopCode += block.code;
         openBlocks++;
         break;
+
+      case 'event_whenflagclicked':
+        //start block, no code
+        break;
     
       default:
         console.log(`Block ${block.type} not implemented`);
@@ -206,17 +210,15 @@ function compileCode(codeBlockArr) {
     cLoopCode += '}';
   }
 
-  let cCode = `
-    ${cGlobalCode}
+  let cCode = `${cGlobalCode}
 
-    void setup() {
-      ${cSetupCode}
-    }
-    
-    void loop() {
-      ${cLoopCode}
-    }
-  `;
+void setup() {
+  ${cSetupCode}
+}
+
+void loop() {
+  ${cLoopCode}
+}`;
 
   return cCode;
 }
