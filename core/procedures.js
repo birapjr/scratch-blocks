@@ -282,7 +282,7 @@ Blockly.Procedures.getCallers = function(name, ws, definitionRoot,
     if (block.id == definitionRoot.id && !allowRecursive) {
       continue;
     }
-    allBlocks.push.apply(allBlocks, block.getDescendants(false));
+    allBlocks.push.apply(allBlocks, block.getDescendants());
   }
 
   var callers = [];

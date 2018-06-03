@@ -142,7 +142,7 @@ Blockly.Generator.prototype.prefixLines = function(text, prefix) {
  */
 Blockly.Generator.prototype.allNestedComments = function(block) {
   var comments = [];
-  var blocks = block.getDescendants(true);
+  var blocks = block.getDescendants();
   for (var i = 0; i < blocks.length; i++) {
     var comment = blocks[i].getCommentText();
     if (comment) {
@@ -378,11 +378,9 @@ Blockly.Generator.prototype.provideFunction_ = function(desiredName, code) {
  * Hook for code to run before code generation starts.
  * Subclasses may override this, e.g. to initialise the database of variable
  * names.
- * @param {!Blockly.Workspace} _workspace Workspace to generate code from.
+ * @param {!Blockly.Workspace} workspace Workspace to generate code from.
  */
-Blockly.Generator.prototype.init = function(_workspace) {
-  // Optionally override
-};
+Blockly.Generator.prototype.init = undefined;
 
 /**
  * Common tasks for generating code from blocks.  This is called from
@@ -390,15 +388,12 @@ Blockly.Generator.prototype.init = function(_workspace) {
  * Subclasses may override this, e.g. to generate code for statements following
  * the block, or to handle comments for the specified block and any connected
  * value blocks.
- * @param {!Blockly.Block} _block The current block.
+ * @param {!Blockly.Block} block The current block.
  * @param {string} code The JavaScript code created for this block.
  * @return {string} JavaScript code with comments and subsequent blocks added.
  * @private
  */
-Blockly.Generator.prototype.scrub_ = function(_block, code) {
-  // Optionally override
-  return code;
-};
+Blockly.Generator.prototype.scrub_ = undefined;
 
 /**
  * Hook for code to run at end of code generation.
@@ -407,10 +402,7 @@ Blockly.Generator.prototype.scrub_ = function(_block, code) {
  * @param {string} code Generated code.
  * @return {string} Completed code.
  */
-Blockly.Generator.prototype.finish = function(code) {
-  // Optionally override
-  return code;
-};
+Blockly.Generator.prototype.finish = undefined;
 
 /**
  * Naked values are top-level blocks with outputs that aren't plugged into
@@ -420,7 +412,4 @@ Blockly.Generator.prototype.finish = function(code) {
  * @param {string} line Line of generated code.
  * @return {string} Legal line of code.
  */
-Blockly.Generator.prototype.scrubNakedValue = function(line) {
-  // Optionally override
-  return line;
-};
+Blockly.Generator.prototype.scrubNakedValue = undefined;

@@ -54,7 +54,7 @@ Blockly.Variables.allUsedVariables = function(root) {
   var blocks;
   if (root instanceof Blockly.Block) {
     // Root is Block.
-    blocks = root.getDescendants(false);
+    blocks = root.getDescendants();
   } else if (root instanceof Blockly.Workspace ||
       root instanceof Blockly.WorkspaceSvg) {
     // Root is Workspace.

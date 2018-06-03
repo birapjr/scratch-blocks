@@ -280,7 +280,7 @@ Blockly.RenderedConnection.prototype.setHidden = function(hidden) {
 Blockly.RenderedConnection.prototype.hideAll = function() {
   this.setHidden(true);
   if (this.targetConnection) {
-    var blocks = this.targetBlock().getDescendants(false);
+    var blocks = this.targetBlock().getDescendants();
     for (var i = 0; i < blocks.length; i++) {
       var block = blocks[i];
       // Hide all connections of all children.

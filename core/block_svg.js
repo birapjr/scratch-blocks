@@ -42,6 +42,7 @@ goog.require('goog.Timer');
 goog.require('goog.asserts');
 goog.require('goog.dom');
 goog.require('goog.math.Coordinate');
+goog.require('goog.userAgent');
 
 
 /**
@@ -231,8 +232,7 @@ Blockly.BlockSvg.prototype.setGlowStack = function(isGlowingStack) {
   // Update the applied SVG filter if the property has changed
   var svg = this.getSvgRoot();
   if (this.isGlowingStack_ && !svg.hasAttribute('filter')) {
-    var stackGlowFilterId = this.workspace.options.stackGlowFilterId || 'blocklyStackGlowFilter';
-    svg.setAttribute('filter', 'url(#' + stackGlowFilterId + ')');
+    svg.setAttribute('filter', 'url(#blocklyStackGlowFilter)');
   } else if (!this.isGlowingStack_ && svg.hasAttribute('filter')) {
     svg.removeAttribute('filter');
   }
@@ -551,7 +551,7 @@ Blockly.BlockSvg.prototype.setCollapsed = function(collapsed) {
   var COLLAPSED_INPUT_NAME = '_TEMP_COLLAPSED_INPUT';
   if (collapsed) {
     var icons = this.getIcons();
-    for (var i = 0; i < icons.length; i++) {
+    for (i = 0; i < icons.length; i++) {
       icons[i].setVisible(false);
     }
     var text = this.toString(Blockly.COLLAPSE_CHARS);
@@ -980,15 +980,12 @@ Blockly.BlockSvg.prototype.getCommentText = function() {
 /**
  * Set this block's comment text.
  * @param {?string} text The text, or null to delete.
- * @param {number=} commentX Optional x position for scratch comment in workspace coordinates
- * @param {number=} commentY Optional y position for scratch comment in workspace coordinates
- * @param {boolean=} minimized Optional minimized state for scratch comment, defaults to false
  */
-Blockly.BlockSvg.prototype.setCommentText = function(text, commentX, commentY, minimized) {
+Blockly.BlockSvg.prototype.setCommentText = function(text) {
   var changedState = false;
   if (goog.isString(text)) {
     if (!this.comment) {
-      this.comment = new Blockly.ScratchBlockComment(this, commentX, commentY, minimized);
+      this.comment = new Blockly.Comment(this);
       changedState = true;
     }
     this.comment.setText(/** @type {string} */ (text));
@@ -1000,9 +997,6 @@ Blockly.BlockSvg.prototype.setCommentText = function(text, commentX, commentY, m
   }
   if (changedState && this.rendered) {
     this.render();
-    if (goog.isString(text)) {
-      this.comment.setVisible(true);
-    }
     // Adding or removing a comment icon will cause the block to change shape.
     this.bumpNeighbours_();
   }

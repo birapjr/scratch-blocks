@@ -261,8 +261,7 @@ Blockly.Msg.SOUND_SETVOLUMETO = "set volume to %1%";
 Blockly.Msg.SOUND_VOLUME = "volume";
 
 // Context menus
-Blockly.Msg.DUPLICATE = 'Duplicate';
-Blockly.Msg.DELETE = 'Delete';
+Blockly.Msg.DUPLICATE_BLOCK = 'Duplicate';
 Blockly.Msg.ADD_COMMENT = 'Add Comment';
 Blockly.Msg.REMOVE_COMMENT = 'Remove Comment';
 Blockly.Msg.DELETE_BLOCK = 'Delete Block';
@@ -275,6 +274,8 @@ Blockly.Msg.REDO = 'Redo';
 Blockly.Msg.EDIT_PROCEDURE = 'Edit';
 Blockly.Msg.SHOW_PROCEDURE_DEFINITION = 'Go to definition';
 Blockly.Msg.WORKSPACE_COMMENT_DEFAULT_TEXT = 'Say something...';
+Blockly.Msg.DUPLICATE_COMMENT = 'Duplicate Comment';
+Blockly.Msg.REMOVE_COMMENT = 'Remove Comment';
 
 // Color
 Blockly.Msg.COLOUR_HUE_LABEL = 'Color';

@@ -511,7 +511,7 @@ Blockly.Css.CONTENT = [
   '}',
 
   '.blocklyFlyoutButtonShadow {',
-    'fill: transparent;',
+    'fill: none;',
   '}',
 
   '.blocklyFlyoutButton:hover {',
@@ -645,50 +645,6 @@ Blockly.Css.CONTENT = [
 
   '.blocklyDeleteIconShape.blocklyDeleteIconHighlighted {',
     'stroke: #fc3;',
-  '}',
-
-  // Scratch Comments
-
-  '.scratchCommentBody {',
-    'background-color: #fef49c;',
-    'display: flex',
-    'justify-content: center;',
-    'align-items: center;',
-  '}',
-
-  '.scratchCommentRect {',
-    'fill: #fef49c;',
-    'stroke-width: 1px',
-  '}',
-
-  '.scratchCommentTopBar {',
-    'fill: #000000;',
-    'fill-opacity: 0.1',
-  '}',
-
-  '.scratchCommentText {',
-    'font-family: "Helvetica Neue", Helvetica, sans-serif;',
-    'font-size: 12pt;',
-    'font-weight: 400;',
-  '}',
-
-  '.scratchCommentTextarea {',
-    'background-color: #fef49c;',
-    'border: 0;',
-    'outline: 0;',
-    'padding: 0;',
-    'resize: none;',
-    'overflow: hidden;',
-  '}',
-
-  '.scratchCommentResizeSE {',
-    'cursor: se-resize;',
-    'fill: transparent;',
-  '}',
-
-  '.scratchCommentResizeSW {',
-    'cursor: sw-resize;',
-    'fill: transparent;',
   '}',
 
   '.blocklyHtmlInput {',
