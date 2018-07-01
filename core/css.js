@@ -647,6 +647,63 @@ Blockly.Css.CONTENT = [
     'stroke: #fc3;',
   '}',
 
+  // Scratch Comments
+
+  '.scratchCommentForeignObject {',
+    'position: relative;',
+  '}',
+
+  '.scratchCommentBody {',
+    'background-color: #fef49c;',
+  '}',
+
+  '.scratchCommentRect {',
+    'fill: #fef49c;',
+  '}',
+
+  '.scratchCommentTarget {',
+    'fill: transparent;',
+  '}',
+
+  '.scratchWorkspaceCommentBorder {',
+    'stroke: #bcA903;',
+    'stroke-width: 1px;',
+  '}',
+
+  '.scratchCommentTargetFocused {',
+    'fill: none;',
+  '}',
+
+  '.scratchCommentTopBar {',
+    'fill: #000000;',
+    'fill-opacity: 0.1',
+  '}',
+
+  '.scratchCommentText {',
+    'font-family: "Helvetica Neue", Helvetica, sans-serif;',
+    'font-size: 12pt;',
+    'font-weight: 400;',
+  '}',
+
+  '.scratchCommentTextarea {',
+    'background-color: #fef49c;',
+    'border: 0;',
+    'outline: 0;',
+    'padding: 0;',
+    'resize: none;',
+    'overflow: hidden;',
+  '}',
+
+  '.scratchCommentResizeSE {',
+    'cursor: se-resize;',
+    'fill: transparent;',
+  '}',
+
+  '.scratchCommentResizeSW {',
+    'cursor: sw-resize;',
+    'fill: transparent;',
+  '}',
+
   '.blocklyHtmlInput {',
     'border: none;',
     'font-family: "Helvetica Neue", Helvetica, sans-serif;',

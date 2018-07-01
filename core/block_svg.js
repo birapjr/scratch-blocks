@@ -310,12 +310,8 @@ Blockly.BlockSvg.prototype.setParent = function(newParent) {
   // If we are losing a parent, we want to move our DOM element to the
   // root of the workspace.
   else if (oldParent) {
-    // Avoid moving a block up the DOM if it's currently selected/dragging,
-    // so as to avoid taking things off the drag surface.
-    if (Blockly.selected != this) {
-      this.workspace.getCanvas().appendChild(svgRoot);
-      this.translate(oldXY.x, oldXY.y);
-    }
+    this.workspace.getCanvas().appendChild(svgRoot);
+    this.translate(oldXY.x, oldXY.y);
   }
 
 };
@@ -980,15 +976,22 @@ Blockly.BlockSvg.prototype.getCommentText = function() {
 /**
  * Set this block's comment text.
  * @param {?string} text The text, or null to delete.
+ * @param {string=} commentId Id of the comment, or a new one will be generated if not provided.
+ * @param {number=} commentX Optional x position for scratch comment in workspace coordinates
+ * @param {number=} commentY Optional y position for scratch comment in workspace coordinates
+ * @param {boolean=} minimized Optional minimized state for scratch comment, defaults to false
  */
-Blockly.BlockSvg.prototype.setCommentText = function(text) {
+Blockly.BlockSvg.prototype.setCommentText = function(text, commentId,
+    commentX, commentY, minimized) {
   var changedState = false;
   if (goog.isString(text)) {
     if (!this.comment) {
-      this.comment = new Blockly.Comment(this);
+      this.comment = new Blockly.ScratchBlockComment(this, text, commentId,
+          commentX, commentY, minimized);
       changedState = true;
+    } else {
+      this.comment.setText(/** @type {string} */ (text));
     }
-    this.comment.setText(/** @type {string} */ (text));
   } else {
     if (this.comment) {
       this.comment.dispose();
