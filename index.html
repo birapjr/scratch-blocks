@@ -403,6 +403,27 @@
 
         $('#savedProjectDialog').dialog();
       }
+
+      function uploadData() {
+        $('#loader3').show();
+
+        //Get xml data of the project
+        let xml = Blockly.Xml.workspaceToDom(workspace);
+        let prettyXmlText = Blockly.Xml.domToPrettyText(xml);
+        $('#serverMessages').text('');
+
+        //Send to server to process
+        $.ajax({
+          type: 'POST',    
+          url: 'webservice/uploadProject',
+          dataType: 'json',
+          data: { prettyXmlText },
+          success: function(msg){
+            $('#serverMessages').text(msg.msg);
+            $('#loader3').hide();
+          }
+        });
+      }
     </script>
 
     <!-- Default style-->

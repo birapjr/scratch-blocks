@@ -1,6 +1,6 @@
 /**
  * @license
- * Visual Blocks Editor
+ * TrendsMix Building Blocks for Arduino 
  *
  * Copyright 2018 TrendsMix Technology
  * All rights reserved.
@@ -19,7 +19,7 @@
  */
 
 /**
- * @fileoverview TrendsMix Building Blocks for Arduino - Transpiler from Google Blocks to Arduino C code
+ * @fileoverview Transpiler from Google Blocks to Arduino C code
  * @author ubirajara.cortes@trendsmix.com <Ubirajara Cortes>
  */
 'use strict';
@@ -134,6 +134,14 @@ function getNextBlock(jsonCodeObject, lastBlockId) {
           case 'red-off':
             nextBlock.code = 'digitalWrite(RED_LED, LOW);';
             break;
+
+            case 'blue':
+            nextBlock.code = 'digitalWrite(BLUE_LED, HIGH);';
+            break;
+
+          case 'blue-off':
+            nextBlock.code = 'digitalWrite(BLUE_LED, LOW);';
+            break;
         
           default:
             break;
@@ -166,19 +174,58 @@ function compileCode(codeBlockArr) {
   let cLoopCode = '';
 
   let openBlocks = 0;
+  let ledRedSet = false;
+  let ledBlueSet = false;
 
   codeBlockArr.forEach(block => {
     switch (block.type) {
       case 'arduino_setcolor':
         if (block.value == 'red') {
           //Global Code
-          cGlobalCode += 'int RED_LED = 3;';
-          //Setup code
-          cSetupCode += 'pinMode(RED_LED, OUTPUT);';
+          if (!ledRedSet) {
+            cGlobalCode += 'int RED_LED = 3;';
+            //Setup code
+            cSetupCode += 'pinMode(RED_LED, OUTPUT);';
+            ledRedSet = true;
+          }
+
           //Loop code
           cLoopCode += block.code;
         }
         else if (block.value == 'red-off') {
+          //Global Code
+          if (!ledRedSet) {
+            cGlobalCode += 'int RED_LED = 3;';
+            //Setup code
+            cSetupCode += 'pinMode(RED_LED, OUTPUT);';
+            ledRedSet = true;
+          }
+
+          //Loop code          
+          cLoopCode += block.code;
+        }
+        else if (block.value == 'blue') {
+          //Global Code
+          if (!ledBlueSet) {
+            cGlobalCode += 'int BLUE_LED = 4;';
+            //Setup code
+            cSetupCode += 'pinMode(BLUE_LED, OUTPUT);';
+            ledBlueSet = true;
+          }
+
+          //Loop code
+          cLoopCode += block.code;
+        }
+        else if (block.value == 'blue-off') {
+          //Global Code
+          if (!ledBlueSet) {
+            cGlobalCode += 'int BLUE_LED = 4;';
+            //Setup code
+            cSetupCode += 'pinMode(BLUE_LED, OUTPUT);';
+            ledBlueSet = true;
+          }
+          
+          //Loop code
           cLoopCode += block.code;
         }
         break;

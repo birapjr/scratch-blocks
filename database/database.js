@@ -1,6 +1,6 @@
 /**
  * @license
- * Visual Blocks Editor
+ * TrendsMix Building Blocks for Arduino 
  *
  * Copyright 2018 TrendsMix Technology
  * All rights reserved.
@@ -19,7 +19,7 @@
  */
 
 /**
- * @fileoverview TrendsMix Building Blocks for Arduino - Database module
+ * @fileoverview Database module
  * @author ubirajara.cortes@trendsmix.com <Ubirajara Cortes>
  */
 'use strict';
@@ -33,7 +33,7 @@ const Sequelize = require('sequelize');
 //connection uri
 //TODO: Change to enviroment varible
 
-//Local dev server
+//Database server connection string
 const db_conn = process.env.DB_CONNECTION;
 
 //TODO: find a good place for it

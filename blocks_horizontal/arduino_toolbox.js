@@ -1,6 +1,6 @@
 /**
  * @license
- * Visual Blocks Editor
+ * TrendsMix Building Blocks for Arduino 
  *
  * Copyright 2018 TrendsMix Technology
  * All rights reserved.
@@ -18,6 +18,10 @@
  * limitations under the License.
  */
 
+/**
+ * @fileoverview Arduino Blocks code
+ * @author ubirajara.cortes@trendsmix.com <Ubirajara Cortes>
+ */
 'use strict';
 
 goog.provide('Blockly.Blocks.arduinoToolbox');
@@ -35,19 +39,19 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '<category name="Control">' +
         '<block type="control_forever"></block>' +
         '<block type="control_repeat">' +
-        '<value name="TIMES">' +
-        '<shadow type="math_whole_number">' +
-        '<field name="NUM">4</field>' +
-        '</shadow>' +
-        '</value>' +
+            '<value name="TIMES">' +
+                '<shadow type="math_whole_number">' +
+                    '<field name="NUM">4</field>' +
+                '</shadow>' +
+            '</value>' +
         '</block>' +
         '<block type="control_stop"></block>' +
         '<block type="control_wait">' +
-        '<value name="DURATION">' +
-        '<shadow type="math_positive_number">' +
-        '<field name="NUM">1</field>' +
-        '</shadow>' +
-        '</value>' +
+            '<value name="DURATION">' +
+                '<shadow type="math_positive_number">' +
+                    '<field name="NUM">1</field>' +
+                '</shadow>' +
+            '</value>' +
         '</block>' +
     '</category>' +
     '<category name="Hardware">' +

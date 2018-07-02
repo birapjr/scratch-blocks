@@ -1,6 +1,6 @@
 /**
  * @license
- * Visual Blocks Editor
+ * TrendsMix Building Blocks for Arduino
  *
  * Copyright 2018 TrendsMix Technology
  * All rights reserved.
@@ -19,7 +19,7 @@
  */
 
 /**
- * @fileoverview Arduino blocks for Scratch (Horizontal)
+ * @fileoverview Arduino blocks Horizontal
  * @author ubirajara.cortes@trendsmix.com <Ubirajara Cortes>
  */
 'use strict';
